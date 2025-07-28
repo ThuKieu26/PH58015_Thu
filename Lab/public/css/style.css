@@ -1,0 +1,28 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Arial;
+}
+.container{
+    justify-content: center;
+    align-items: center;
+}
+body{
+    width: 1680px;
+}
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+nav a {
+    margin: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: larger;
+}
+form input {
+    margin-right: 600px;
+    margin: 5px 0; 
+}
