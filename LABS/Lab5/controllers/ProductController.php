@@ -13,7 +13,13 @@ class ProductController
     {
         $title = "Đây là trang chủ nhé hahaa";
         $thoiTiet = "Hôm nay trời có vẻ là mưa";
-        $products = $this->model->getAll();
+        $name = $_GET['name'] ?? '';
+        if ($name != '') {
+            $products = $this->model->searchByName($name); 
+        } else {
+            $products = $this->model->getAll();
+        }
+        //$products = $this->model->getAll();
         require_once './views/trangchu.php';
     }
     public function Detail(){

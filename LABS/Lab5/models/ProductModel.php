@@ -73,4 +73,11 @@ class ProductModel
         $stmt = $this->conn->prepare("UPDATE products SET name = ?, price = ?, description = ?, category_id = ? WHERE id = ?");
         return $stmt->execute([$name, $price, $desc, $catId, $id]);
     }
+    public function searchByName($name) {
+        $stmt = $this->conn->prepare("SELECT * FROM products WHERE name LIKE ?");
+        $search = "%" . $name . "%";
+        $stmt->execute([$search]); 
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+        return $result;
+    }
 }
