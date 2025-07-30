@@ -11,8 +11,8 @@ class ProductController
 
     public function Home()
     {
-        $title = "Đây là trang chủ nhé hahaa";
-        $thoiTiet = "Hôm nay trời có vẻ là mưa";
+        // $title = "Đây là trang chủ nhé hahaa";
+        // $thoiTiet = "Hôm nay trời có vẻ là mưa";
         $name = $_GET['search_name'] ?? '';
         if ($name != '') {
             $products = $this->modelProduct->searchByName($name); 
@@ -30,9 +30,18 @@ class ProductController
             $product = $this->modelProduct->getOneProduct($id);
             //getOneProduct() lấy chi tiết sản phẩm
         }
-
-        // Tải view để hiển thị chi tiết sản phẩm
-        // Bạn cần tạo file này: ./views/chitiet_sanpham.php
         require_once './views/sanpham.php';
+    }
+    public function Gioithieu(){
+        require_once "./views/gioithieu.php";
+    }
+    public function Dangnhap(){
+        require_once "./views/dangnhap.php";
+    }
+    public function Dangky(){
+        require_once "./views/dangky.php";
+    }
+    public function Lienhe(){
+        require_once "./views/lienhe.php";
     }
 }

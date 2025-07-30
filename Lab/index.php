@@ -7,7 +7,7 @@ require_once './commons/function.php'; // Hàm hỗ trợ
 
 // Require toàn bộ file Controllers
 require_once './controllers/ProductController.php';
-
+require_once './controllers/CategoryController.php';
 // Require toàn bộ file Models
 require_once './models/ProductModel.php';
 
@@ -21,4 +21,9 @@ match ($act) {
     // Trang chủ
     '/'=>(new ProductController())->Home(),
     'products-detail'=>(new ProductController())->ProductDetail(),
+    'gioithieu'=>(new ProductController())->Gioithieu(),
+    'dangnhap'=>(new ProductController())->Dangnhap(),
+    'dangky'=>(new ProductController())->Dangky(),
+    'lienhe'=>(new ProductController())->Lienhe(),
+    'categories'=>(new CategoryController())->Show(),
 };

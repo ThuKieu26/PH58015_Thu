@@ -4,12 +4,10 @@
     box-sizing: border-box;
     font-family: Arial;
 }
-.container{
+body{
+    width: 1600px;
     justify-content: center;
     align-items: center;
-}
-body{
-    width: 1680px;
 }
 header{
     display: flex;
