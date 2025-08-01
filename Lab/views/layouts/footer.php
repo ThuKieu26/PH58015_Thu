@@ -9,6 +9,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #1A2A80;
         }
     </style>
 </head>

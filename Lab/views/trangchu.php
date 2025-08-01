@@ -14,15 +14,19 @@
             /* Thay đổi ở đây: cố định 4 cột với chiều rộng bằng nhau */
             grid-template-columns: repeat(5, 1fr); 
             gap: -30px;/*  Khoảng cách giữa các box */
-            margin: 20px 40px;
+            margin: 20px 50px;
         }
         .spham{
-            width: 270px;
+            width: 265px;
             height: 350px;
             border: 1px solid black;
             padding: 20px;
             border: 1px solid black;
             margin-bottom: 20px;
+            margin-left: 40px;
+        }
+        .spham a{
+            color: #1A2A80;
         }
         form{
             display: flex;
@@ -47,7 +51,7 @@
         <input type="text" name="search_name" placeholder="Tìm kiếm sản phẩm theo tên" required>
         <button type="submit">Tìm kiếm</button>
     </form>
-    <h1 style="margin: 10px 600px;">Sản phẩm</h1>
+    <h1 style="margin: 10px 755px;">Sản phẩm</h1>
     <div class="sanpham">
         <?php foreach ($products as $sp): ?>
             <div class="spham">

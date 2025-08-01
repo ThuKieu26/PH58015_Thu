@@ -26,4 +26,8 @@ match ($act) {
     'dangky'=>(new ProductController())->Dangky(),
     'lienhe'=>(new ProductController())->Lienhe(),
     'categories'=>(new CategoryController())->Show(),
+    'category-list'=>(new CategoryController())->list(),
+    'category-add'=>(new CategoryController())->add(),
+    'category-edit'=>(new CategoryController())->edit(),
+    'category-delete'=>(new CategoryController())->delete(),
 };
