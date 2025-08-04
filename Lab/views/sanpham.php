@@ -48,9 +48,7 @@
                 <?php if (isset($product['discount']) && $product['discount'] > 0): ?>
                     <p>Giảm giá: <?= htmlspecialchars($product['discount']) ?>%</p>
                 <?php endif; ?>
-                <?php else: ?>
-                <p>Không tìm thấy sản phẩm này.</p>
-                <?php endif; ?>
+            
                 <form action="index.php?act=cart-add" method="post">
                     <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['id']) ?>">
                     <input type="number" name="quantity" value="1" min="1" style="width: 50px;">
@@ -59,6 +57,47 @@
                 <a href="index.php" class="back-link">Quay lại trang chủ</a>
             </div>
     </div>
+
+    <hr>
+    <div class="comments-section" style="margin-left: 400px;">
+        <h2>Bình luận</h2>
+        <form action="">
+            <textarea name="comment" placeholder="Viết bình luận của bạn..." required style="width: 500px; height: 100px;"></textarea><br>
+            <button type="submit" style="margin-top: 10px;">Gửi bình luận</button>
+        </form>
+        <?php if (isset($_SESSION['user'])): ?>
+            <form action="index.php?act=products-detail&id=<?= $product['id'] ?>" method="post">
+                <textarea name="comment" placeholder="Viết bình luận của bạn..." required style="width: 500px; height: 100px;"></textarea><br>
+                <input type="hidden" name="submit_comment" value="1">
+                <button type="submit" style="margin-top: 10px;">Gửi bình luận</button>
+            </form>
+        <?php else: ?>
+            <p>Vui lòng <a href="index.php?act=dangnhap">đăng nhập</a> để bình luận.</p>
+        <?php endif; ?>
+
+        <div class="comments-list" style="margin-top: 20px;">
+            <h3>Các bình luận trước đó</h3>
+            <?php if (!empty($comments)): ?>
+                <?php foreach ($comments as $comment): ?>
+                    <div class="comment" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+                        <strong><?= htmlspecialchars($comment['user_name']) ?>:</strong>
+                        <span><?= htmlspecialchars($comment['content']) ?></span>
+                        <br>
+                        <small>Vào lúc: <?= htmlspecialchars($comment['date']) ?></small>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Chưa có bình luận nào.</p>
+            <?php endif; ?>
+        </div>
+        
+    </div>
+    
+    <?php else: ?>
+        <div class="product-detail" style="display: block; text-align: center;">
+            <p>Không tìm thấy sản phẩm này.</p>
+        </div>
+    <?php endif; ?>
     <?php include './views/layouts/footer.php'; ?>
 </body>
 </html>

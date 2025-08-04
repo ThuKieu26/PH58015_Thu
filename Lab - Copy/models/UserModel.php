@@ -19,12 +19,12 @@ class UserModel
         $stmt = $this->conn->prepare($sql);
 
         // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
-        //$hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+        $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
 
         return $stmt->execute([
             'name'     => $data['name'],
             'email'    => $data['email'],
-            'password' => $data['password'], //$hashedPassword,
+            'password' => $hashedPassword,
             'role'     => $data['role'] ?? 'user'
         ]);
     }

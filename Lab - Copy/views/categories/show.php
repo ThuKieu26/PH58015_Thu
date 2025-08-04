@@ -41,7 +41,6 @@
     <?php else: ?>
         <p style="text-align: center;">Không có danh mục nào để hiển thị.</p>
     <?php endif; ?>
-<a href="index.php?act=category-list" style="margin: 10px 600px;"> Quản lý danh mục</a>
 
 <?php include './views/layouts/footer.php'; ?>
     

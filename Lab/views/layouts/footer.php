@@ -6,16 +6,18 @@
     <title>Document</title>
     <style>
         footer{
+            height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #1A2A80;
+            color: white;
+            background-color: #1A2A80;
         }
     </style>
 </head>
 <body>
     <hr>
-    <footer style="margin-left: 100px; height: 100px; ">
+    <footer>
         <span>© 2025 HAPAS. All Rights Reserved. | Chính sách bảo mật | Điều khoản sử dụng</span>
     </footer>
 </body>

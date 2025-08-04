@@ -36,7 +36,6 @@ class UserController
                 exit();
             } else {
                 echo "<script>alert('Đăng ký không thành công.'); window.location.href='index.php?act=dangky';</script>";
-                exit();
             }
         }
         require_once "./views/dangky.php";
@@ -50,20 +49,10 @@ class UserController
 
             $user = $this->userModel->login($email);
 
-            if ($user && $password = $user['password']) {
+            if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user'] = $user;
-
-                // THÊM LOGIC KIỂM TRA ROLE ĐỂ CHUYỂN HƯỚNG
-                if ($user['role'] === 'admin') {
-                    // Nếu là admin, chuyển hướng đến trang admin
-                    header("Location: index.php?act=category-list"); 
-                    exit();
-                } else {
-                    // Nếu là người dùng bình thường, chuyển hướng về trang chủ
-                    header("Location: index.php");
-                    exit();
-                
-                }
+                header("Location: index.php");
+                exit();
             } else {
                 echo "<script>alert('Email hoặc mật khẩu không đúng!'); window.location.href='index.php?act=dangnhap';</script>";
                 exit();
@@ -74,6 +63,9 @@ class UserController
 
     public function logout()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         session_unset();
         session_destroy();
         header("Location: index.php");
