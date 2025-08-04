@@ -11,7 +11,7 @@ class CategoryModel{
         $stmt->execute();
         return $stmt->fetchAll();
     }
-    public function getCategorysByCategory($id){
+    public function getProductsByCategory($id){
         $stmt = $this->conn->prepare("
             SELECT p.*, c.name as category_name
             FROM products p

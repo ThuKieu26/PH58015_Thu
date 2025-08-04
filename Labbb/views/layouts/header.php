@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="public/css/style.css">
 </head>
 <body>
+<!-- <div class="container"> -->
     <header>
         <img src="public/image/logo.jpg" width="60px" height="60px">
         <nav>
