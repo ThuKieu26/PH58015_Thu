@@ -33,6 +33,16 @@
 </head>
 <body>
     <?php include './views/layouts/header.php'; ?>
+    <?php
+    if (isset($_SESSION['message'])) {
+        echo "<p style='color: green; text-align: center;'>{$_SESSION['message']}</p>";
+        unset($_SESSION['message']);
+    }
+    if (isset($_SESSION['error'])) {
+        echo "<p style='color: red; text-align: center;'>{$_SESSION['error']}</p>";
+        unset($_SESSION['error']);
+    }
+    ?>
     <img src="public/image/spchitiet.jpeg" alt="" style="margin: 10px 500px; width: 700px; height: 300px" >
     <div class="product-detail">
         <?php if (isset($product) && $product): // Kiểm tra xem có sản phẩm nào được tìm thấy không ?>
@@ -61,19 +71,12 @@
     <hr>
     <div class="comments-section" style="margin-left: 400px;">
         <h2>Bình luận</h2>
-        <form action="">
-            <textarea name="comment" placeholder="Viết bình luận của bạn..." required style="width: 500px; height: 100px;"></textarea><br>
-            <button type="submit" style="margin-top: 10px;">Gửi bình luận</button>
-        </form>
-        <?php if (isset($_SESSION['user'])): ?>
-            <form action="index.php?act=products-detail&id=<?= $product['id'] ?>" method="post">
-                <textarea name="comment" placeholder="Viết bình luận của bạn..." required style="width: 500px; height: 100px;"></textarea><br>
+            <form action="index.php?act=products-detail&id=<?= htmlspecialchars($product['id']) ?>" method="post">
+                <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['id']) ?>">
+                <textarea name="content" placeholder="Viết bình luận của bạn..." required style="width: 500px; height: 100px;"></textarea><br>
                 <input type="hidden" name="submit_comment" value="1">
                 <button type="submit" style="margin-top: 10px;">Gửi bình luận</button>
             </form>
-        <?php else: ?>
-            <p>Vui lòng <a href="index.php?act=dangnhap">đăng nhập</a> để bình luận.</p>
-        <?php endif; ?>
 
         <div class="comments-list" style="margin-top: 20px;">
             <h3>Các bình luận trước đó</h3>

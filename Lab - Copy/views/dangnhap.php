@@ -1,6 +1,6 @@
 <?php include './views/layouts/header.php'; ?>
-<h1 style="margin: 10px 600px;" method="post">Đăng nhập</h1>
-<form action="index.php?act=dangnhap" style="margin: 10px 600px;">
+<h1 style="margin: 10px 600px;">Đăng nhập</h1>
+<form action="index.php?act=dangnhap" style="margin: 10px 600px;"  method="post">
     <p>Email</p>
     <input type="text" name="email" placeholder="Nhập Email"><br>
     <p>Mật khẩu</p>

@@ -5,45 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .category-section{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            line-height: 20px;
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        h2{
-            margin: 30px;
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #100e84ff;
+            color: white;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
 
 <?php include './views/layouts/header.php'; ?>
-<h2 style="text-align: center;">Tất cả danh mục sản phẩm</h2>
-    <?php if (!empty($data)): ?>
-        <?php foreach ($data as $item): ?>
-            <div class="category-section">
-                <h2 class="category-title"><?= htmlspecialchars($item['category']['name']) ?></h2>
+<h2>Tất cả danh mục sản phẩm</h2>
+<?php if (!empty($data)): ?>
+    <table>
+        <thead>
+            <tr>
+                <th>Danh mục</th>
+                <th>Sản phẩm</th>
+                <th>Ảnh</th>
+                <th>Giá</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($data as $item): ?>
                 <?php if (!empty($item['products'])): ?>
-                    <ul class="product-list">
-                        <?php foreach ($item['products'] as $p): ?>
-                            <li>
-                                <?= htmlspecialchars($p['name']) ?> - <?= number_format($p['price']) ?> VNĐ
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
+                    <?php foreach ($item['products'] as $p): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($item['category']['name']) ?></td>
+                            <td><?= htmlspecialchars($p['name']) ?></td>
+                            <td><img src="<?= htmlspecialchars($p['image']) ?>" alt="" width="100px" height="100px"></td>
+                            <td><?= number_format($p['price']) ?> VNĐ</td>
+                        </tr>
+                    <?php endforeach; ?>
                 <?php else: ?>
-                    <p class="no-products">Không có sản phẩm nào trong danh mục này.</p>
+                    <tr>
+                        <td><?= htmlspecialchars($item['category']['name']) ?></td>
+                        <td colspan="2" style="text-align:center;">Không có sản phẩm nào</td>
+                    </tr>
                 <?php endif; ?>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p style="text-align: center;">Không có danh mục nào để hiển thị.</p>
-    <?php endif; ?>
-<a href="index.php?act=category-list" style="margin: 10px 600px;"> Quản lý danh mục</a>
-
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p style="text-align: center;">Không có danh mục nào để hiển thị.</p>
+<?php endif; ?>
 <?php include './views/layouts/footer.php'; ?>
     
 </body>
 </html>
+
+
+

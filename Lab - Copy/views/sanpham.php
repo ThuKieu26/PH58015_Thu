@@ -61,15 +61,11 @@
     <hr>
     <div class="comments-section" style="margin-left: 400px;">
         <h2>Bình luận</h2>
-        <?php if (isset($_SESSION['user'])): ?>
             <form action="index.php?act=products-detail&id=<?= $product['id'] ?>" method="post">
-                <textarea name="comment_content" placeholder="Viết bình luận của bạn..." required style="width: 500px; height: 100px;"></textarea><br>
+                <textarea name="content" placeholder="Viết bình luận của bạn..." required style="width: 500px; height: 100px;"></textarea><br>
                 <input type="hidden" name="submit_comment" value="1">
                 <button type="submit" style="margin-top: 10px;">Gửi bình luận</button>
             </form>
-        <?php else: ?>
-            <p>Vui lòng <a href="index.php?act=dangnhap">đăng nhập</a> để bình luận.</p>
-        <?php endif; ?>
 
         <div class="comments-list" style="margin-top: 20px;">
             <h3>Các bình luận trước đó</h3>
@@ -86,6 +82,7 @@
                 <p>Chưa có bình luận nào.</p>
             <?php endif; ?>
         </div>
+        
     </div>
     
     <?php else: ?>

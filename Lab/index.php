@@ -10,11 +10,19 @@ require_once './controllers/ProductController.php';
 require_once './controllers/CategoryController.php';
 require_once './controllers/UserController.php';
 require_once './controllers/CartController.php';
+require_once './controllers/CommentController.php';
 // Require toàn bộ file Models
 require_once './models/ProductModel.php';
 require_once './models/CategoryModel.php';
 require_once './models/UserModel.php';
 require_once './models/CommentModel.php';
+// Kiểm tra quyền admin cho các trang quản trị
+function checkAdmin() {
+    if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
+        header("Location: index.php?act=dangnhap");
+        exit();
+    }
+}
 // Route
 $act = $_GET['act'] ?? '/';
 
@@ -42,13 +50,20 @@ match ($act) {
     'cart-list' => (new CartController())->listCart(),
     'cart-update' => (new CartController())->updateCart(),
     'cart-delete' => (new CartController())->deleteCart(),
-    // PHẦN MỚI: Các route quản lý sản phẩm
+    // quản lý sản phẩm
     'product-list'      => (new ProductController())->list(),
     'product-add'       => (new ProductController())->add(),
     'product-edit'      => (new ProductController())->edit(),
     'product-delete'    => (new ProductController())->delete(),
     'product-detail'    => (new ProductController())->detail(),
     // Quản lý comment
-    'comment-list'    => (new CommentController())->list(), // Giả định có CommentController
+    'comment-list'    => (new CommentController())->list(), 
     'comment-delete'  => (new CommentController())->delete(),
+    'comment-add'      => (new CommentController())->add(),
+    //quản lý ng dùng
+    'user-list'    => (new UserController())->list(), 
+    'user-adduser' => (new UserController())->showAddForm(),
+    'user-add'     => (new UserController())->add(),
+    'user-edit'    => (new UserController())->edit(),
+    'user-delete'  => (new UserController())->delete(),  
 };

@@ -60,7 +60,7 @@
         <button type="submit">Tìm kiếm</button>
     </form>
     <hr>
-    <h1 style="margin: 10px 755px;">Sản phẩm</h1>
+    <h1 style="margin: 10px 720px;">Các sản phẩm</h1>
     <div class="sanpham">
         <?php foreach ($products as $sp): ?>
             <div class="spham">

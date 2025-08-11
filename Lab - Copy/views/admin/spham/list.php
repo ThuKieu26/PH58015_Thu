@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý Bình luận</title>
+    <title>Quản lý Sản phẩm</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,6 +12,9 @@
             width: 80%;
             margin: auto;
             padding: 20px;
+        }
+        h1{
+            text-align: center;
         }
         table {
             width: 100%;
@@ -36,59 +39,78 @@
         .action-link:hover {
             text-decoration: underline;
         }
+        .add-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .add-link:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
-<?php 
-include './views/layouts/header.php'; 
+
+<?php
+session_start();
+include './views/layouts/header.php';
 ?>
+
 <div class="container">
-    <h1>Quản lý Bình luận</h1>
-    <?php 
-    // Hiển thị thông báo (nếu có)
+    <h1>Quản lý Sản phẩm</h1>
+    <a href="index.php?act=product-add" class="add-link">Thêm sản phẩm mới</a>
+
+    <?php
     if (isset($_SESSION['message'])): ?>
         <p style="color: green;"><?= $_SESSION['message']; ?></p>
         <?php unset($_SESSION['message']); ?>
     <?php endif; ?>
+
     <?php if (isset($_SESSION['error'])): ?>
         <p style="color: red;"><?= $_SESSION['error']; ?></p>
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
+
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Tên Người dùng</th>
                 <th>Tên Sản phẩm</th>
-                <th>Nội dung</th>
-                <th>Thời gian</th>
+                <th>Ảnh</th>
+                <th>Giá</th>
                 <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
-            <?php if (!empty($comments)): ?>
-                <?php foreach ($comments as $comment): ?>
+            <?php if (!empty($products)): ?>
+                <?php foreach ($products as $product): ?>
                     <tr>
-                        <td><?= htmlspecialchars($comment['id']) ?></td>
-                        <td><?= htmlspecialchars($comment['user_name']) ?></td>
-                        <td><?= htmlspecialchars($comment['product_name']) ?></td>
-                        <td><?= htmlspecialchars($comment['content']) ?></td>
-                        <td><?= htmlspecialchars($comment['date']) ?></td>
+                        <td><?= htmlspecialchars($product['id']) ?></td>
+                        <td><?= htmlspecialchars($product['name']) ?></td>
+                        <td><img src="<?= htmlspecialchars($product['image']) ?>" width="100" alt="<?= htmlspecialchars($product['name']) ?>"></td>
+                        <td><?= number_format($product['price']) ?> VNĐ</td>
                         <td>
-                            <a class="action-link" href="index.php?act=comment-delete&id=<?= htmlspecialchars($comment['id']) ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa bình luận này không?')">Xóa</a>
+                            <a class="action-link" href="index.php?act=product-edit&id=<?= htmlspecialchars($product['id']) ?>">Sửa</a>
+                            <a class="action-link" href="index.php?act=product-delete&id=<?= htmlspecialchars($product['id']) ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')">Xóa</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="6">Không có bình luận nào để hiển thị.</td>
+                    <td colspan="5">Không có sản phẩm nào để hiển thị.</td>
                 </tr>
             <?php endif; ?>
         </tbody>
     </table>
 </div>
-<?php 
-include './views/layouts/footer.php'; 
+
+<?php
+include './views/layouts/footer.php';
 ?>
+
 </body>
 </html>

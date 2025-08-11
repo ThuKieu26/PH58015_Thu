@@ -31,4 +31,24 @@ class CommentModel
         $stmt->execute([$productId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    // Bổ sung: Lấy tất cả bình luận từ cơ sở dữ liệu
+    public function getAllComments()
+    {
+        $sql = "SELECT c.*, p.name as product_name, u.name as user_name
+                FROM comments c
+                JOIN products p ON c.product_id = p.id
+                JOIN users u ON c.user_id = u.id
+                ORDER BY c.date DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Bổ sung: Xóa một bình luận dựa trên ID
+    public function deleteComment($id)
+    {
+        $sql = "DELETE FROM comments WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$id]);
+    }
 }

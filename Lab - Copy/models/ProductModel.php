@@ -50,4 +50,24 @@ class ProductModel
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC); 
         return $result;
     }
+    // PHƯƠNG THỨC MỚI: Thêm sản phẩm
+    public function insertProduct($data) {
+        $sql = "INSERT INTO products (name, price, description, category_id) VALUES (?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$data['name'], $data['price'], $data['description'], $data['category_id']]);
+    }
+
+    // PHƯƠNG THỨC MỚI: Cập nhật sản phẩm
+    public function updateProduct($id, $data) {
+        $sql = "UPDATE products SET name = ?, price = ?, description = ?, category_id = ? WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$data['name'], $data['price'], $data['description'], $data['category_id'], $id]);
+    }
+
+    // PHƯƠNG THỨC MỚI: Xóa sản phẩm
+    public function deleteProduct($id) {
+        $sql = "DELETE FROM products WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$id]);
+    }
 }
