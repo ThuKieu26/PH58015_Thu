@@ -1,6 +1,6 @@
 <?php
 require_once "./models/UserModel.php";
-
+session_start();
 class UserController
 {
     public $userModel;
@@ -51,7 +51,7 @@ class UserController
 
             $user = $this->userModel->login($email);
 
-            if ($user && $password = $user['password']) {
+            if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user'] = $user;
 
                 // THÊM LOGIC KIỂM TRA ROLE ĐỂ CHUYỂN HƯỚNG
@@ -81,13 +81,16 @@ class UserController
         exit();
     }
     public function list() {
+        checkAdmin();
         $users = $this->userModel->getAllUsers();
         include './views/admin/user/list.php';
     }
     public function showAddForm() {
+        checkAdmin();
         include './views/admin/user/adduser.php';
     }
     public function add() {
+        checkAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'name'     => $_POST['username'] ?? '',
@@ -113,42 +116,42 @@ class UserController
             exit();
         }
     }
-    public function edit() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Xử lý dữ liệu khi form được gửi đi (POST)
-            $id = $_POST['id'];
-            $data = [
-                'name'  => $_POST['username'] ?? '',
-                'email' => $_POST['email'] ?? '',
-                'role'  => $_POST['role'] ?? ''
-            ];
-            // Nếu người dùng nhập mật khẩu mới, thì cập nhật
-            if (!empty($_POST['password'])) {
-                $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            }
-            $result = $this->userModel->updateUser($id, $data);
-            if ($result) {
-                echo "<script>alert('Cập nhật người dùng thành công!'); window.location.href='index.php?act=user-list';</script>";
-                exit();
-            } else {
-                echo "<script>alert('Cập nhật người dùng không thành công.'); window.location.href='index.php?act=user-edit&id={$id}';</script>";
-                exit();
-            }
-        } else {
-            // Hiển thị form chỉnh sửa (GET)
-            $id = $_GET['id'] ?? null;
-            if (!$id) {
-                header("Location: index.php?act=user-list");
-                exit();
-            }
-            $user = $this->userModel->getUserById($id);
-            if (!$user) {
-                echo "<script>alert('Không tìm thấy người dùng!'); window.location.href='index.php?act=user-list';</script>";
-                exit();
-            }
-            include './views/admin/user/edit.php';
-        }
-    }
+    // public function edit() {
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //         // Xử lý dữ liệu khi form được gửi đi (POST)
+    //         $id = $_POST['id'];
+    //         $data = [
+    //             'name'  => $_POST['username'] ?? '',
+    //             'email' => $_POST['email'] ?? '',
+    //             'role'  => $_POST['role'] ?? ''
+    //         ];
+    //         // Nếu người dùng nhập mật khẩu mới, thì cập nhật
+    //         if (!empty($_POST['password'])) {
+    //             $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    //         }
+    //         $result = $this->userModel->updateUser($id, $data);
+    //         if ($result) {
+    //             echo "<script>alert('Cập nhật người dùng thành công!'); window.location.href='index.php?act=user-list';</script>";
+    //             exit();
+    //         } else {
+    //             echo "<script>alert('Cập nhật người dùng không thành công.'); window.location.href='index.php?act=user-edit&id={$id}';</script>";
+    //             exit();
+    //         }
+    //     } else {
+    //         // Hiển thị form chỉnh sửa (GET)
+    //         $id = $_GET['id'] ?? null;
+    //         if (!$id) {
+    //             header("Location: index.php?act=user-list");
+    //             exit();
+    //         }
+    //         $user = $this->userModel->getUserById($id);
+    //         if (!$user) {
+    //             echo "<script>alert('Không tìm thấy người dùng!'); window.location.href='index.php?act=user-list';</script>";
+    //             exit();
+    //         }
+    //         include './views/admin/user/edit.php';
+    //     }
+    // }
     public function delete() {
         // Kiểm tra quyền admin trước khi thực hiện hành động
         checkAdmin();

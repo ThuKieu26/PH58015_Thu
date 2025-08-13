@@ -58,16 +58,16 @@ class ProductModel
     }
     // PHƯƠNG THỨC MỚI: Thêm sản phẩm
     public function insertProduct($data) {
-        $sql = "INSERT INTO products (name, price, description, category_id) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO products (name, price, description, quantity, view, discount, category_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([$data['name'], $data['price'], $data['description'], $data['category_id']]);
+        return $stmt->execute([$data['name'], $data['price'], $data['description'], $data['quantity'], $data['view'], $data['discount'], $data['category_id']]);
     }
 
     // PHƯƠNG THỨC MỚI: Cập nhật sản phẩm
     public function updateProduct($id, $data) {
-        $sql = "UPDATE products SET name = ?, price = ?, description = ?, category_id = ? WHERE id = ?";
+        $sql = "UPDATE products SET name = ?, price = ?, image = ?, description = ?, quantity = ?, view = ?, discount = ? category_id = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([$data['name'], $data['price'], $data['description'], $data['category_id'], $id]);
+        return $stmt->execute([$data['name'], $data['price'], $data['image'], $data['description'], $data['quantity'], $data['view'], $data['discount'], $data['category_id'], $id]);
     }
 
     // PHƯƠNG THỨC MỚI: Xóa sản phẩm

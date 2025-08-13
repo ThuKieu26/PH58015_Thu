@@ -51,7 +51,7 @@ class UserController
 
             $user = $this->userModel->login($email);
 
-            if ($user && $password = $user['password']) {
+            if ($user && password_verify($password, $user['password'])) {
                 $_SESSION['user'] = $user;
 
                 // THÊM LOGIC KIỂM TRA ROLE ĐỂ CHUYỂN HƯỚNG

@@ -39,26 +39,21 @@
     </style>
 </head>
 <body>
-
 <?php 
 include './views/layouts/header.php'; 
 ?>
-
 <div class="container">
     <h1>Quản lý Bình luận</h1>
-
     <?php 
     // Hiển thị thông báo (nếu có)
     if (isset($_SESSION['message'])): ?>
         <p style="color: green;"><?= $_SESSION['message']; ?></p>
         <?php unset($_SESSION['message']); ?>
     <?php endif; ?>
-    
     <?php if (isset($_SESSION['error'])): ?>
         <p style="color: red;"><?= $_SESSION['error']; ?></p>
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
-
     <table>
         <thead>
             <tr>
@@ -92,11 +87,8 @@ include './views/layouts/header.php';
         </tbody>
     </table>
 </div>
-
 <?php 
-// Giả sử có một file footer chung
 include './views/layouts/footer.php'; 
 ?>
-
 </body>
 </html>

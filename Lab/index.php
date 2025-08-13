@@ -1,6 +1,6 @@
 <?php 
 // Require toàn bộ các file khai báo môi trường, thực thi,...(không require view)
-
+session_start();
 // Require file Common
 require_once './commons/env.php'; // Khai báo biến môi trường
 require_once './commons/function.php'; // Hàm hỗ trợ
@@ -59,7 +59,7 @@ match ($act) {
     // Quản lý comment
     'comment-list'    => (new CommentController())->list(), 
     'comment-delete'  => (new CommentController())->delete(),
-    'comment-add'      => (new CommentController())->add(),
+    //'comment-add'      => (new CommentController())->add(),
     //quản lý ng dùng
     'user-list'    => (new UserController())->list(), 
     'user-adduser' => (new UserController())->showAddForm(),

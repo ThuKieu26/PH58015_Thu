@@ -26,7 +26,8 @@
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #1565c0;
+            color: white;
         }
         .action-link {
             color: red;
@@ -44,6 +45,7 @@ include './views/layouts/header.php';
 ?>
 <div class="container">
     <h1>Quản lý Bình luận</h1>
+    <a href="index.php?act=category-list">Quay lại</a>
     <?php 
     // Hiển thị thông báo (nếu có)
     if (isset($_SESSION['message'])): ?>

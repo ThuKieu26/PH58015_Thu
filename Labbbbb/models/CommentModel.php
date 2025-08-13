@@ -13,9 +13,10 @@ class CommentModel
     // Thêm bình luận mới vào cơ sở dữ liệu
     public function addComment($productId, $userId, $content)
     {
-        $sql = "INSERT INTO comments (product_id, user_id, content) VALUES (?, ?, ?)";
+        $currentDate = date('Y-m-d H:i:s');
+        $sql = "INSERT INTO comments (content, product_id, user_id, date) VALUES (?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([$productId, $userId, $content]);
+        return $stmt->execute([$content, $productId, $userId, $currentDate]);
     }
 
     // Lấy tất cả bình luận cho một sản phẩm cụ thể

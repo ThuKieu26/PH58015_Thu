@@ -31,12 +31,18 @@ class ProductModel
         }
         return $stmt->fetchAll();
     }
-    public function getAllProduct()
-    {
-        $stmt = $this->conn->prepare("SELECT * FROM products"); //
-        $stmt->execute(); 
-        return $stmt->fetchAll();
-    }
+    // public function getAllProduct()
+    // {
+    //     $stmt = $this->conn->prepare("SELECT * FROM products"); //
+    //     $stmt->execute(); 
+    //     return $stmt->fetchAll();
+    // }
+    public function getAllProduct() {
+    $sql = "SELECT p.*, c.name as category_name FROM products p JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
     //truy vấn cơ sở dữ liệu để lấy thông tin của một sản phẩm cụ thể
     public function getOneProduct($id) {
         $stmt = $this->conn->prepare("SELECT * FROM products WHERE id = ?");

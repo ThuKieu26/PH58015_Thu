@@ -20,10 +20,10 @@
 // Kiểm tra xem người dùng đã đăng nhập và có quyền admin không
 if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin') {
 ?>
-    <a href="index.php?act=admin-quanly">Quản lý Danh mục</a>
-    <a href="index.php?act=comment-list">Quản lý Comment</a>
+    <a href="index.php?act=user-list">Quản lý User</a>
     <a href="index.php?act=product-list">Quản lý Sản phẩm</a>
     <a href="index.php?act=comment-list">Quản lý Bình luận</a>
+
 <?php
 }
 // ...

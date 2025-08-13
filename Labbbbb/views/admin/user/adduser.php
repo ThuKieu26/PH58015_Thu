@@ -14,7 +14,6 @@
         h1 {
             color: #333;
             text-align: center;
-            margin-left: 700px;
         }
         form {
             background-color: #fff;

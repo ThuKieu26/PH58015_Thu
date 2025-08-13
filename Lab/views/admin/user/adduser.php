@@ -14,7 +14,6 @@
         h1 {
             color: #333;
             text-align: center;
-            margin-left: 700px;
         }
         form {
             background-color: #fff;
@@ -60,6 +59,7 @@
 <body>
 <?php include './views/layouts/header.php'; ?>
 <h1>Thêm người dùng mới</h1>
+<a href="index.php?act=category-list">Quay lại</a>
 <form action="index.php?act=user-add" method="POST">
     <label for="username">Tên người dùng:</label><br>
     <input type="text" id="username" name="username" required><br><br>

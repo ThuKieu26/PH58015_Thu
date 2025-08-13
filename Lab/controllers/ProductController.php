@@ -33,34 +33,11 @@ class ProductController
         $product = null;
         $comments = [];
         if ($id > 0) {
-            // Xử lý bình luận
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_comment'])) {
-                if (isset($_SESSION['user'])) {
-                    $userId = $_SESSION['user']['id'];
-                    $content = $_POST['content'] ?? ''; 
-                    // if (!empty($content)) {
-                    //     $this->commentModel->addComment($id, $userId, $content);
-                    // }
-                    if (!empty($content)) {
-                        $result = $this->commentModel->addComment($id, $userId, $content);
-                        if ($result) {
-                            $_SESSION['message'] = "Bình luận của bạn đã được gửi thành công!";
-                        } else {
-                            $_SESSION['error'] = "Đã xảy ra lỗi khi gửi bình luận.";
-                        }
-                    }
-                } else {
-                    $_SESSION['error'] = "Vui lòng đăng nhập để bình luận.";
-                }
-                header("Location: index.php?act=products-detail&id=$id");
-                exit();
-            }
             // Lấy thông tin sản phẩm
             $product = $this->modelProduct->getOneProduct($id);
             //Lấy danh sách bình luận sau khi xử lý POST (nếu có)
             $comments = $this->commentModel->getCommentsByProductId($id);
         }
-        
         require_once './views/sanpham.php';
     }
     public function Gioithieu(){
@@ -136,10 +113,13 @@ class ProductController
 
         $data = [
             'name' => $_POST['name'],
+            'image' => $imagePath, // Lưu đường dẫn ảnh
             'price' => $_POST['price'],
             'description' => $_POST['description'],
             'category_id' => $_POST['category_id'],
-            'image' => $imagePath // Lưu đường dẫn ảnh
+            'quantity' => $_POST['quantity'],
+            'view' => $_POST['views'],
+            'discount' => $_POST['discount']
         ];
         $this->modelProduct->insertProduct($data);
         header("Location: index.php?act=product-list");
@@ -147,7 +127,7 @@ class ProductController
     }
     require_once './views/products/add.php';
     }
-    // PHƯƠNG THỨC MỚI: Sửa sản phẩm
+    // Sửa sản phẩm
     public function edit()
     {
         // Kiểm tra quyền admin
@@ -171,6 +151,9 @@ class ProductController
                 'name' => $_POST['name'],
                 'price' => $_POST['price'],
                 'description' => $_POST['description'],
+                'quantity' => $_POST['quantity'],
+                'view' => $_POST['view'],
+                'discount' => $_POST['discount'],
                 'category_id' => $_POST['category_id'],
             ];
             $this->modelProduct->updateProduct($id, $data);
@@ -180,7 +163,7 @@ class ProductController
         require_once './views/products/edit.php';
     }
 
-    // PHƯƠNG THỨC MỚI: Xóa sản phẩm
+    // Xóa sản phẩm
     public function delete()
     {
         // Kiểm tra quyền admin

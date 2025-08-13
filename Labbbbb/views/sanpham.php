@@ -5,34 +5,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .product-detail{
-            display: flex;
-            width: 900px;
-            height: 500px;
-            /* border: 1px solid black; */
-            margin-left: 400px;
-        }
-        .anh{
-            width: 400px;
-            height: 450px;
-            border: 1px solid black;
-            background-color: #121D4C;
-            margin: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .content{
-            line-height: 30px;
-            margin: 20px;
-        }
-        p{
-            color: #121D4C;
-        }
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+.product-detail {
+    display: flex;
+    width: 900px;
+    height: auto;
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.anh {
+    width: 400px;
+    height: 450px;
+    background-color: #121D4C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.anh img {
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.content {
+    line-height: 28px;
+    padding: 20px;
+    flex: 1;
+}
+
+.product-title {
+    color: #121D4C;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    color: #ff5722;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.product-description,
+.content p {
+    color: #333;
+}
+
+button {
+    background-color: #121D4C;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0d153a;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: #121D4C;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.comments-section {
+    background: #fff;
+    width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.comments-section h2 {
+    color: #121D4C;
+}
+
+textarea {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+}
+
+.comments-list h3 {
+    color: #121D4C;
+    margin-bottom: 10px;
+}
+
+.comment {
+    border: 1px solid #ddd;
+    border-left: 4px solid #121D4C;
+    padding: 10px;
+    border-radius: 5px;
+    background: #f9faff;
+}
     </style>
 </head>
 <body>
     <?php include './views/layouts/header.php'; ?>
+    <?php
+    if (isset($_SESSION['message'])) {
+        echo "<p style='color: green; text-align: center;'>{$_SESSION['message']}</p>";
+        unset($_SESSION['message']);
+    }
+    if (isset($_SESSION['error'])) {
+        echo "<p style='color: red; text-align: center;'>{$_SESSION['error']}</p>";
+        unset($_SESSION['error']);
+    }
+    ?>
     <img src="public/image/spchitiet.jpeg" alt="" style="margin: 10px 500px; width: 700px; height: 300px" >
     <div class="product-detail">
         <?php if (isset($product) && $product): // Kiểm tra xem có sản phẩm nào được tìm thấy không ?>
@@ -61,10 +161,10 @@
     <hr>
     <div class="comments-section" style="margin-left: 400px;">
         <h2>Bình luận</h2>
-            <form action="index.php?act=products-detail&id=<?= $product['id'] ?>" method="post">
+            <form action="index.php?act=comment-add" method="post">
+                <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['id']) ?>">
                 <textarea name="content" placeholder="Viết bình luận của bạn..." required style="width: 500px; height: 100px;"></textarea><br>
-                <input type="hidden" name="submit_comment" value="1">
-                <button type="submit" style="margin-top: 10px;">Gửi bình luận</button>
+                <button type="submit" name="submit_comment" style="margin-top: 10px;">Gửi bình luận</button>
             </form>
 
         <div class="comments-list" style="margin-top: 20px;">

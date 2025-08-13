@@ -1,5 +1,4 @@
 <?php
-// Tệp này giả định rằng bạn có một tệp 'commons/function.php' để xử lý kết nối cơ sở dữ liệu.
 require_once 'commons/function.php';
 
 class UserModel
