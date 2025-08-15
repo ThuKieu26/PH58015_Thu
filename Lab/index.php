@@ -9,7 +9,6 @@ require_once './commons/function.php'; // Hàm hỗ trợ
 require_once './controllers/ProductController.php';
 require_once './controllers/CategoryController.php';
 require_once './controllers/UserController.php';
-require_once './controllers/CartController.php';
 require_once './controllers/CommentController.php';
 // Require toàn bộ file Models
 require_once './models/ProductModel.php';
@@ -25,9 +24,6 @@ function checkAdmin() {
 }
 // Route
 $act = $_GET['act'] ?? '/';
-
-
-// Để bảo bảo tính chất chỉ gọi 1 hàm Controller để xử lý request thì mình sử dụng match
 
 match ($act) {
     // Trang chủ
@@ -46,10 +42,10 @@ match ($act) {
     'category-edit'=>(new CategoryController())->edit(),
     'category-delete'=>(new CategoryController())->delete(),
     // Giỏ hang
-    'cart-add' => (new CartController())->addToCart(),
-    'cart-list' => (new CartController())->listCart(),
-    'cart-update' => (new CartController())->updateCart(),
-    'cart-delete' => (new CartController())->deleteCart(),
+    // 'cart-add' => (new CartController())->addToCart(),
+    // 'cart-list' => (new CartController())->listCart(),
+    // 'cart-update' => (new CartController())->updateCart(),
+    // 'cart-delete' => (new CartController())->deleteCart(),
     // quản lý sản phẩm
     'product-list'      => (new ProductController())->list(),
     'product-add'       => (new ProductController())->add(),
@@ -59,7 +55,7 @@ match ($act) {
     // Quản lý comment
     'comment-list'    => (new CommentController())->list(), 
     'comment-delete'  => (new CommentController())->delete(),
-    //'comment-add'      => (new CommentController())->add(),
+    'comment-add'      => (new ProductController())->addComment(),
     //quản lý ng dùng
     'user-list'    => (new UserController())->list(), 
     'user-adduser' => (new UserController())->showAddForm(),

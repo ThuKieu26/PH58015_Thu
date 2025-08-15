@@ -40,6 +40,29 @@ class ProductController
         }
         require_once './views/sanpham.php';
     }
+    public function addComment(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $productId = $_POST['product_id'] ?? 0;
+            $userId = $_SESSION['user']['id'] ?? 0; // Assuming user ID is stored in session
+            $content = $_POST['content'] ?? '';
+
+            if ($productId > 0 && $userId > 0 && !empty($content)) {
+                $commentAdded = $this->commentModel->addComment($productId, $userId, $content);
+                if ($commentAdded) {
+                // Hiển thị thông báo thành công nếu thêm thành công
+                $_SESSION['message'] = 'Bình luận của bạn đã được thêm.';
+            } else {
+                // Hiển thị thông báo lỗi nếu có vấn đề
+                $_SESSION['error'] = 'Có lỗi xảy ra khi thêm bình luận. Vui lòng thử lại.';
+            }
+            } else {
+                $_SESSION['error'] = 'Vui lòng điền đầy đủ thông tin bình luận và đảm bảo bạn đã đăng nhập.';
+            }
+            header('Location: index.php?act=products-detail&id=' . $productId);
+            exit();
+        }
+        require_once "./views/sanpham.php";
+    }
     public function Gioithieu(){
         require_once "./views/gioithieu.php";
     }
@@ -68,32 +91,6 @@ class ProductController
         }
         require_once './views/products/list.php';
     }
-
-    // PHƯƠNG THỨC MỚI: Thêm sản phẩm
-    // public function add()
-    // {
-    //     // Kiểm tra quyền admin
-    //     if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
-    //         header("Location: index.php");
-    //         exit;
-    //     }
-        
-    //     $categoryModel = new CategoryModel();
-    //     $categories = $categoryModel->getAll();
-
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //         $data = [
-    //             'name' => $_POST['name'],
-    //             'price' => $_POST['price'],
-    //             'description' => $_POST['description'],
-    //             'category_id' => $_POST['category_id'],
-    //         ];
-    //         $this->modelProduct->insertProduct($data);
-    //         header("Location: index.php?act=product-list");
-    //         exit;
-    //     }
-    //     require_once './views/products/add.php';
-    // }
     public function add()
 {
     checkAdmin();
@@ -147,9 +144,19 @@ class ProductController
         $product = $this->modelProduct->getOneProduct($id);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $imagePath = $product['image'];
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $upload = './public/image';
+            if (!is_dir($upload)) {
+                mkdir($upload, 0777, true);
+            }
+            $imagePath = $upload . basename($_FILES['image']['name']);
+            move_uploaded_file($_FILES['image']['tmp_name'], $imagePath);
+        }
             $data = [
                 'name' => $_POST['name'],
                 'price' => $_POST['price'],
+                'image' => $imagePath,
                 'description' => $_POST['description'],
                 'quantity' => $_POST['quantity'],
                 'view' => $_POST['view'],

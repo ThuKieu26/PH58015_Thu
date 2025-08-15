@@ -149,10 +149,10 @@ textarea {
                     <p>Giảm giá: <?= htmlspecialchars($product['discount']) ?>%</p>
                 <?php endif; ?>
             
-                <form action="index.php?act=cart-add" method="post">
+                <form action="index.php?" method="post">
                     <input type="hidden" name="product_id" value="<?= htmlspecialchars($product['id']) ?>">
                     <input type="number" name="quantity" value="1" min="1" style="width: 50px;">
-                    <button type="submit">Thêm vào giỏ hàng</button>
+                    <button type="submit" onclick="return confirm('Đã thêm vào giỏ hàng')">Thêm vào giỏ hàng</button>
                 </form>
                 <a href="index.php" class="back-link">Quay lại trang chủ</a>
             </div>

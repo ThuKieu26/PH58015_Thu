@@ -75,9 +75,12 @@ class UserController
 
     public function logout()
     {
+        // if (session_status() === PHP_SESSION_NONE) {
+        //      session_start();
+        // }
         session_unset();
         session_destroy();
-        header("Location: index.php");
+        header("Location: index.php?act=dangnhap");
         exit();
     }
     public function list() {

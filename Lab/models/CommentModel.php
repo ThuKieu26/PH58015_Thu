@@ -8,8 +8,11 @@ class CommentModel
     public function __construct()
     {
         $this->conn = connectDB();
+        if ($this->conn === null) {
+            // Handle case where connection failed
+            throw new Exception("Failed to connect to the database in CommentModel.");
+        }
     }
-
     // Thêm bình luận mới vào cơ sở dữ liệu
     public function addComment($productId, $userId, $content)
     {
@@ -32,7 +35,7 @@ class CommentModel
         $stmt->execute([$productId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    // Bổ sung: Lấy tất cả bình luận từ cơ sở dữ liệu
+    //Lấy tất cả bình luận từ cơ sở dữ liệu
     public function getAllComments()
     {
         $sql = "SELECT c.*, p.name as product_name, u.name as user_name
@@ -45,7 +48,7 @@ class CommentModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Bổ sung: Xóa một bình luận dựa trên ID
+    //Xóa một bình luận dựa trên ID
     public function deleteComment($id)
     {
         $sql = "DELETE FROM comments WHERE id = ?";

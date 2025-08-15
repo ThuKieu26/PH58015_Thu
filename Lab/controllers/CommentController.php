@@ -14,9 +14,6 @@ class CommentController
     {
         // Lấy danh sách tất cả các comments
         $comments = $this->commentModel->getAllComments();
-
-        // Load view để hiển thị danh sách comments
-        // Giả định thư mục views/admin/comments/list.php
         include 'views/admin/comments/list.php';
     }
 

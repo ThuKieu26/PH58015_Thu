@@ -31,12 +31,6 @@ class ProductModel
         }
         return $stmt->fetchAll();
     }
-    // public function getAllProduct()
-    // {
-    //     $stmt = $this->conn->prepare("SELECT * FROM products"); //
-    //     $stmt->execute(); 
-    //     return $stmt->fetchAll();
-    // }
     public function getAllProduct() {
     $sql = "SELECT p.*, c.name as category_name FROM products p JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC";
     $stmt = $this->conn->prepare($sql);
@@ -56,21 +50,21 @@ class ProductModel
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC); 
         return $result;
     }
-    // PHƯƠNG THỨC MỚI: Thêm sản phẩm
+    //Thêm sản phẩm
     public function insertProduct($data) {
         $sql = "INSERT INTO products (name, price, description, quantity, view, discount, category_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([$data['name'], $data['price'], $data['description'], $data['quantity'], $data['view'], $data['discount'], $data['category_id']]);
     }
 
-    // PHƯƠNG THỨC MỚI: Cập nhật sản phẩm
+    //Cập nhật sản phẩm
     public function updateProduct($id, $data) {
-        $sql = "UPDATE products SET name = ?, price = ?, image = ?, description = ?, quantity = ?, view = ?, discount = ? category_id = ? WHERE id = ?";
+        $sql = "UPDATE products SET name = ?, price = ?, image = ?, description = ?, quantity = ?, view = ?, discount = ?, category_id = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([$data['name'], $data['price'], $data['image'], $data['description'], $data['quantity'], $data['view'], $data['discount'], $data['category_id'], $id]);
     }
 
-    // PHƯƠNG THỨC MỚI: Xóa sản phẩm
+    //Xóa sản phẩm
     public function deleteProduct($id) {
         $sql = "DELETE FROM products WHERE id = ?";
         $stmt = $this->conn->prepare($sql);

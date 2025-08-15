@@ -84,7 +84,7 @@
     <input type="number" min="0" id="view" name="view" value="<?= $product['view'] ?>">
 
     <label for="discount">Giảm giá (%)</label>
-    <input type="number" min="0" id="discount" name="discount" value="<?= $product['discount'] ?? 0 ?>">
+    <input type="number" min="0" step="0.01" id="discount" name="discount" value="<?= $product['discount'] ?? 0 ?>">
     <select name="category_id">
         <option value="">-- Chọn danh mục --</option>
         <?php foreach ($categories as $cat): ?>
